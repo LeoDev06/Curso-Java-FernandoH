@@ -1,0 +1,41 @@
+/**
+ * 
+ * @param {HTMLDivElement} elementHtml 
+ */
+
+import { heroes } from "../data/heroes"
+
+
+export const callbacksComponent = (elementHtml) => {
+
+  const id = '5d86371fd55e2e2a30fe1cc3';
+  fineHeroe(id, (error, hero) => {
+
+    // ? Manejo de errores en callbacks
+    if(error){
+      elementHtml.innerHTML = error;
+      return;
+    }
+
+    elementHtml.innerHTML = hero.name;
+  });
+}
+
+/**
+ * Un callback es una funcion que recibe como argumento otra función 
+ * @param {String} id 
+ * @param {(error: String | Null, hero: Object) => void} callback 
+ */
+const fineHeroe = (id, callback) => {
+
+  const heroe = heroes.find(hero => hero.id === id);
+
+  // ? Manejo de errores en callbacks
+  if(!heroe){
+    callback(`Hero with id ${id} not found.`);
+    return;
+  }
+
+  callback( null, heroe);
+
+}
